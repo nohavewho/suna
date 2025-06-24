@@ -625,6 +625,19 @@ export function PricingSection({
   const fetchCurrentPlan = async () => {
     setIsFetchingPlan(true);
     try {
+      // Check if user is authenticated first
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        // User is not authenticated, don't fetch subscription
+        setCurrentSubscription(null);
+        setIsAuthenticated(false);
+        return;
+      }
+      
+      // User is authenticated, fetch subscription
       const subscriptionData = await getSubscription();
       console.log('Fetched Subscription Status:', subscriptionData);
       setCurrentSubscription(subscriptionData);

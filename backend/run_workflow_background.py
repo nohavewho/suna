@@ -21,9 +21,13 @@ try:
     if not any(isinstance(m, dramatiq.middleware.AsyncIO) for m in broker.middleware):
         broker.add_middleware(dramatiq.middleware.AsyncIO())
 except RuntimeError:
-    rabbitmq_host = os.getenv('RABBITMQ_HOST', 'rabbitmq')
-    rabbitmq_port = int(os.getenv('RABBITMQ_PORT', 5672))
-    rabbitmq_broker = RabbitmqBroker(host=rabbitmq_host, port=rabbitmq_port, middleware=[dramatiq.middleware.AsyncIO()])
+    rabbitmq_url = os.getenv('RABBITMQ_URL')
+    if rabbitmq_url:
+        rabbitmq_broker = RabbitmqBroker(url=rabbitmq_url, middleware=[dramatiq.middleware.AsyncIO()])
+    else:
+        rabbitmq_host = os.getenv('RABBITMQ_HOST', 'rabbitmq')
+        rabbitmq_port = int(os.getenv('RABBITMQ_PORT', 5672))
+        rabbitmq_broker = RabbitmqBroker(host=rabbitmq_host, port=rabbitmq_port, middleware=[dramatiq.middleware.AsyncIO()])
     dramatiq.set_broker(rabbitmq_broker)
 
 _initialized = False

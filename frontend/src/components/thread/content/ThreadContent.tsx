@@ -13,7 +13,7 @@ import {
     getUserFriendlyToolName,
     safeJsonParse,
 } from '@/components/thread/utils';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
+import { KortixLogo } from '@/components/sidebar/agent-az-logo';
 import { AgentLoader } from './loader';
 import { parseXmlToolCalls, isNewXmlFormat, extractToolNameFromStream } from '@/components/thread/tool-views/xml-parser';
 import { parseToolResult } from '@/components/thread/tool-views/tool-result-parser';
@@ -297,8 +297,8 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
     project,
     debugMode = false,
     isPreviewMode = false,
-    agentName = 'Suna',
-    agentAvatar = <KortixLogo size={16} />,
+    agentName = 'Agent AZ',
+    agentAvatar = <KortixLogo size={100} />,
     emptyStateComponent,
 }) => {
     const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -576,7 +576,7 @@ export const ThreadContent: React.FC<ThreadContentProps> = ({
                                                         <div className="rounded-md flex items-center justify-center">
                                                             {agentAvatar}
                                                         </div>
-                                                        <p className='ml-2 text-sm text-muted-foreground'>{agentName ? agentName : 'Suna'}</p>
+                                                        <p className='ml-2 text-sm text-muted-foreground'>{agentName ? agentName : 'Agent AZ'}</p>
                                                     </div>
                                                     
                                                     {/* Message content - ALL messages in the group */}

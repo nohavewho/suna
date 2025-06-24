@@ -77,7 +77,7 @@ export const CustomMCPDialog: React.FC<CustomMCPDialogProps> = ({
         throw new Error('You must be logged in to discover tools');
       }
 
-      const response = await fetch(`${API_URL}/mcp/discover-custom-tools`, {
+      const response = await fetch(`${API_URL}/api/mcp/discover-custom-tools`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -6,8 +6,7 @@ import { Bot, Menu, Store, Shield, Key, Workflow } from 'lucide-react';
 
 import { NavAgents } from '@/components/sidebar/nav-agents';
 import { NavUserWithTeams } from '@/components/sidebar/nav-user-with-teams';
-import { KortixLogo } from '@/components/sidebar/kortix-logo';
-import { CTACard } from '@/components/sidebar/cta';
+import { AIResearchLogo } from '@/components/sidebar/ai-research-logo';
 import {
   Sidebar,
   SidebarContent,
@@ -99,7 +98,7 @@ export function SidebarLeft({
       <SidebarHeader className="px-2 py-2">
         <div className="flex h-[40px] items-center px-1 relative">
           <Link href="/dashboard">
-            <KortixLogo />
+            <AIResearchLogo size={40} />
           </Link>
           {state !== 'collapsed' && (
             <div className="ml-2 transition-all duration-200 ease-in-out whitespace-nowrap">
@@ -186,11 +185,6 @@ export function SidebarLeft({
         )}
         <NavAgents />
       </SidebarContent>
-      {state !== 'collapsed' && (
-        <div className="px-3 py-2">
-          <CTACard />
-        </div>
-      )}
       <SidebarFooter>
         {state === 'collapsed' && (
           <div className="mt-2 flex justify-center">

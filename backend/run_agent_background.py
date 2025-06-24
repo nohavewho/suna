@@ -14,6 +14,7 @@ from services.supabase import DBConnection
 from services import redis
 from dramatiq.brokers.rabbitmq import RabbitmqBroker
 import os
+
 from services.langfuse import langfuse
 from utils.retry import retry
 
@@ -22,9 +23,23 @@ try:
     if not any(isinstance(m, dramatiq.middleware.AsyncIO) for m in broker.middleware):
         broker.add_middleware(dramatiq.middleware.AsyncIO())
 except RuntimeError:
-    rabbitmq_host = os.getenv('RABBITMQ_HOST', 'rabbitmq')
-    rabbitmq_port = int(os.getenv('RABBITMQ_PORT', 5672))
-    rabbitmq_broker = RabbitmqBroker(host=rabbitmq_host, port=rabbitmq_port, middleware=[dramatiq.middleware.AsyncIO()])
+    # Only initialize if not already done
+    from dramatiq.middleware import TimeLimit, Retries
+    
+    rabbitmq_url = os.getenv('RABBITMQ_URL')
+    middleware = [
+        dramatiq.middleware.AsyncIO(),
+        Retries(max_retries=3),
+        TimeLimit(time_limit=600000),  # 10 minute timeout
+    ]
+    
+    if rabbitmq_url:
+        rabbitmq_broker = RabbitmqBroker(url=rabbitmq_url, middleware=middleware)
+    else:
+        rabbitmq_host = os.getenv('RABBITMQ_HOST', 'rabbitmq')
+        rabbitmq_port = int(os.getenv('RABBITMQ_PORT', 5672))
+        rabbitmq_broker = RabbitmqBroker(host=rabbitmq_host, port=rabbitmq_port, middleware=middleware)
+    
     dramatiq.set_broker(rabbitmq_broker)
 
 _initialized = False
@@ -44,7 +59,14 @@ async def initialize():
     logger.info(f"Initialized agent API with instance ID: {instance_id}")
 
 
-@dramatiq.actor
+@dramatiq.actor(
+    queue_name="default",
+    priority=0,  # Normal priority
+    max_retries=3,
+    min_backoff=15000,  # 15 seconds
+    max_backoff=900000,  # 15 minutes
+    time_limit=600000,  # 10 minutes max execution time
+)
 async def run_agent_background(
     agent_run_id: str,
     thread_id: str,

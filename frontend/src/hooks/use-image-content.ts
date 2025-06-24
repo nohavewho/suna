@@ -89,7 +89,7 @@ export function useImageContent(sandboxId?: string, filePath?: string) {
     setIsLoading(true);
     
     // Create a URL for the fetch request
-    const url = new URL(`${process.env.NEXT_PUBLIC_BACKEND_URL}/sandboxes/${sandboxId}/files/content`);
+    const url = new URL(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sandboxes/${sandboxId}/files/content`);
     url.searchParams.append('path', normalizedPath);
     
     // Create a promise for this load and track it

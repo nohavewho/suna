@@ -1724,18 +1724,24 @@ async def update_agent(
             if not update_result.data:
                 raise HTTPException(status_code=500, detail="Failed to update agent")
         
-        # Fetch the updated agent data with version info
-        updated_agent = await client.table('agents').select('*, agent_versions!current_version_id(*)').eq("agent_id", agent_id).eq("account_id", user_id).maybe_single().execute()
+        # Fetch the updated agent data
+        updated_agent = await client.table('agents').select('*').eq("agent_id", agent_id).eq("account_id", user_id).maybe_single().execute()
         
         if not updated_agent.data:
             raise HTTPException(status_code=500, detail="Failed to fetch updated agent")
+        
+        # Fetch version info separately if current_version_id exists
+        version_data = None
+        if updated_agent.data.get('current_version_id'):
+            version_result = await client.table('agent_versions').select('*').eq("version_id", updated_agent.data['current_version_id']).maybe_single().execute()
+            if version_result.data:
+                version_data = version_result.data
         
         agent = updated_agent.data
         
         # Prepare current version response
         current_version = None
-        if agent.get('agent_versions'):
-            version_data = agent['agent_versions']
+        if version_data:
             current_version = AgentVersionResponse(
                 version_id=version_data['version_id'],
                 agent_id=version_data['agent_id'],
@@ -1779,8 +1785,14 @@ async def update_agent(
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error updating agent {agent_id} for user {user_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to update agent: {str(e)}")
+        # Log the full exception details
+        import traceback
+        error_detail = traceback.format_exc()
+        logger.error(f"Error updating agent {agent_id} for user {user_id}: {repr(e)}\n{error_detail}")
+        
+        # Try to provide a more meaningful error message
+        error_msg = str(e) if str(e) else f"Unknown error: {type(e).__name__}"
+        raise HTTPException(status_code=500, detail=f"Failed to update agent: {error_msg}")
 
 @router.delete("/agents/{agent_id}")
 async def delete_agent(agent_id: str, user_id: str = Depends(get_current_user_id_from_jwt)):

@@ -11,7 +11,6 @@ import { useScroll } from 'motion/react';
 import { signIn, signUp, forgotPassword } from './actions';
 import { useSearchParams, useRouter } from 'next/navigation';
 import {
-  ArrowLeft,
   X,
   CheckCircle,
   AlertCircle,
@@ -19,6 +18,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { useAuth } from '@/components/AuthProvider';
+import Image from 'next/image';
 
 import {
   Dialog,
@@ -250,8 +250,23 @@ function LoginContent() {
               <div className="absolute inset-x-1/4 top-0 h-[600px] md:h-[800px] -z-20 bg-background rounded-b-xl"></div>
 
               {/* Success content */}
-              <div className="relative z-10 pt-24 pb-8 max-w-xl mx-auto h-full w-full flex flex-col gap-2 items-center justify-center">
+              <div className="relative z-10 pt-16 pb-8 max-w-xl mx-auto h-full w-full flex flex-col gap-2 items-center justify-center">
                 <div className="flex flex-col items-center text-center">
+                  {/* Agent AZ Logo */}
+                  <div className="mb-6 flex items-center justify-center">
+                    <div className="relative">
+                      <Image
+                        src="/az.png"
+                        alt="Agent AZ"
+                        width={80}
+                        height={80}
+                        className="rounded-2xl shadow-lg ring-1 ring-border/20"
+                        priority
+                      />
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary/5 to-secondary/5"></div>
+                    </div>
+                  </div>
+
                   <div className="bg-green-50 dark:bg-green-950/20 rounded-full p-4 mb-6">
                     <MailCheck className="h-12 w-12 text-green-500 dark:text-green-400" />
                   </div>
@@ -354,19 +369,24 @@ function LoginContent() {
             <div className="absolute inset-x-1/4 top-0 h-[600px] md:h-[800px] -z-20 bg-background rounded-b-xl"></div>
 
             {/* Header content */}
-            <div className="relative z-10 pt-24 pb-8 max-w-md mx-auto h-full w-full flex flex-col gap-2 items-center justify-center">
-              <Link
-                href="/"
-                className="group border border-border/50 bg-background hover:bg-accent/20 rounded-full text-sm h-8 px-3 flex items-center gap-2 transition-all duration-200 shadow-sm mb-6"
-              >
-                <ArrowLeft className="h-4 w-4 text-muted-foreground" />
-                <span className="font-medium text-muted-foreground text-xs tracking-wide">
-                  Back to home
-                </span>
-              </Link>
+            <div className="relative z-10 pt-16 pb-8 max-w-md mx-auto h-full w-full flex flex-col gap-2 items-center justify-center">
+              {/* Agent AZ Logo */}
+              <div className="mb-8 flex items-center justify-center">
+                <div className="relative">
+                  <Image
+                    src="/az.png"
+                    alt="Agent AZ"
+                    width={96}
+                    height={96}
+                    className="rounded-2xl shadow-lg ring-1 ring-border/20"
+                    priority
+                  />
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary/5 to-secondary/5"></div>
+                </div>
+              </div>
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tighter text-center text-balance text-primary">
-                {isSignUp ? 'Join Suna' : 'Welcome back'}
+                {isSignUp ? 'Join Agent AZ' : 'Welcome back'}
               </h1>
               <p className="text-base md:text-lg text-center text-muted-foreground font-medium text-balance leading-relaxed tracking-tight mt-2 mb-6">
                 {isSignUp

@@ -278,7 +278,7 @@ export function FileViewerModal({
             // Load from server if not cached
             console.log(`[DOWNLOAD ALL] Loading file from server: ${file.path}`);
             const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(file.path)}`,
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(file.path)}`,
               {
                 headers: { 'Authorization': `Bearer ${session.access_token}` }
               }
@@ -315,7 +315,7 @@ export function FileViewerModal({
                 console.warn(`[DOWNLOAD ALL] Failed to fetch blob content for: ${file.path}`, blobError);
                 // Fallback: try to fetch from server directly
                 const fallbackResponse = await fetch(
-                  `${process.env.NEXT_PUBLIC_BACKEND_URL}/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(file.path)}`,
+                  `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(file.path)}`,
                   { headers: { 'Authorization': `Bearer ${session.access_token}` } }
                 );
                 if (fallbackResponse.ok) {
@@ -1048,7 +1048,7 @@ export function FileViewerModal({
           if (rawContent.startsWith('blob:')) {
             // If it's a blob URL, get directly from server to avoid CORS issues
             const response = await fetch(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(selectedFilePath)}`,
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(selectedFilePath)}`,
               { headers: { 'Authorization': `Bearer ${session?.access_token}` } }
             );
 
@@ -1077,7 +1077,7 @@ export function FileViewerModal({
 
       // Get from server if no raw content
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(selectedFilePath)}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/sandboxes/${sandboxId}/files/content?path=${encodeURIComponent(selectedFilePath)}`,
         { headers: { 'Authorization': `Bearer ${session?.access_token}` } }
       );
 
@@ -1153,7 +1153,7 @@ export function FileViewerModal({
         }
 
         const response = await fetch(
-          `${API_URL}/sandboxes/${sandboxId}/files`,
+          `${API_URL}/api/sandboxes/${sandboxId}/files`,
           {
             method: 'POST',
             headers: {

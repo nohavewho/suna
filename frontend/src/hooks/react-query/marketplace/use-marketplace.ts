@@ -64,7 +64,7 @@ export function useMarketplaceAgents(params: MarketplaceAgentsParams = {}) {
         if (params.sort_by) queryParams.append('sort_by', params.sort_by);
         if (params.creator) queryParams.append('creator', params.creator);
 
-        const url = `${API_URL}/marketplace/agents${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+        const url = `${API_URL}/api/marketplace/agents${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
         
         const headers: Record<string, string> = {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export function useAddAgentToLibrary() {
           throw new Error('You must be logged in to add agents to your library');
         }
 
-        const response = await fetch(`${API_URL}/marketplace/agents/${originalAgentId}/add-to-library`, {
+        const response = await fetch(`${API_URL}/api/marketplace/agents/${originalAgentId}/add-to-library`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ export function usePublishAgent() {
         if (!session) {
           throw new Error('You must be logged in to publish agents');
         }
-        const response = await fetch(`${API_URL}/agents/${agentId}/publish`, {
+        const response = await fetch(`${API_URL}/api/agents/${agentId}/publish`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -203,7 +203,7 @@ export function useUnpublishAgent() {
           throw new Error('You must be logged in to unpublish agents');
         }
 
-        const response = await fetch(`${API_URL}/agents/${agentId}/unpublish`, {
+        const response = await fetch(`${API_URL}/api/agents/${agentId}/unpublish`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -244,7 +244,7 @@ export function useUserAgentLibrary() {
           throw new Error('You must be logged in to view your agent library');
         }
 
-        const response = await fetch(`${API_URL}/user/agent-library`, {
+        const response = await fetch(`${API_URL}/api/user/agent-library`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

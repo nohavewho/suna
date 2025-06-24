@@ -10,7 +10,7 @@ import {
   } from '@/components/workflows/scheduling/types';
   
   const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
-  const SCHEDULING_API_URL = `${API_URL}/v1/schedules`;
+  const SCHEDULING_API_URL = `${API_URL}/api/v1/schedules`;
   
   export async function getWorkflowSchedules(workflowId: string): Promise<ScheduleListResponse> {
     const response = await fetch(`${SCHEDULING_API_URL}?workflow_id=${workflowId}`);

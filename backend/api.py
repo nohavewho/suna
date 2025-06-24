@@ -7,6 +7,13 @@ from agentpress.thread_manager import ThreadManager
 from services.supabase import DBConnection
 from datetime import datetime, timezone
 from dotenv import load_dotenv
+
+# Load environment variables first
+load_dotenv()
+
+# Initialize Dramatiq broker before any imports that use it
+import init_dramatiq
+
 from utils.config import config, EnvMode
 import asyncio
 from utils.logger import logger, structlog
@@ -25,9 +32,8 @@ from services import transcription as transcription_api
 from services.mcp_custom import discover_custom_tools
 import sys
 from services import email_api
+import os
 
-
-load_dotenv()
 
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
@@ -121,7 +127,7 @@ async def log_requests_middleware(request: Request, call_next):
         raise
 
 # Define allowed origins based on environment
-allowed_origins = ["https://www.suna.so", "https://suna.so", "http://localhost:3000"]
+allowed_origins = ["https://www.suna.so", "https://suna.so", "http://localhost:3000", "https://airesearchprojects.com", "https://www.airesearchprojects.com"]
 allow_origin_regex = None
 
 # Add staging-specific origins
@@ -192,6 +198,20 @@ async def discover_custom_mcp_tools(request: CustomMCPDiscoverRequest):
     except Exception as e:
         logger.error(f"Error discovering custom MCP tools: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/health")
+async def health_check():
+    """Health check endpoint for PM2"""
+    try:
+        # Check Redis connection
+        from services import redis
+        redis_client = await redis.get_client()
+        await redis_client.ping()
+        
+        return {"status": "healthy", "timestamp": datetime.now(timezone.utc).isoformat()}
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        raise HTTPException(status_code=503, detail=f"Service unhealthy: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

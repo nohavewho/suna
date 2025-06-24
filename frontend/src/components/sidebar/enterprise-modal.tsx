@@ -11,7 +11,7 @@ import Image from 'next/image';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { useTheme } from 'next-themes';
 
-export function KortixProcessModal() {
+export function EnterpriseModal() {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const { resolvedTheme } = useTheme();
@@ -41,12 +41,10 @@ export function KortixProcessModal() {
             <div className="relative z-10 flex flex-col h-full">
               <div className="mb-8 mt-0 flex-shrink-0">
                 <Image
-                  src={
-                    isDarkMode ? '/kortix-logo-white.svg' : '/kortix-logo.svg'
-                  }
-                  alt="Kortix Logo"
+                  src="/az.png"
+                  alt="Agent AZ Logo"
                   width={60}
-                  height={21}
+                  height={60}
                   className="h-6 w-auto"
                 />
               </div>
@@ -141,7 +139,7 @@ export function KortixProcessModal() {
             <div className="h-full overflow-auto">
               <Cal
                 namespace="enterprise-demo"
-                calLink="team/kortix/enterprise-demo"
+                calLink="team/airesearch/enterprise-demo"
                 style={{ width: '100%', height: '100%' }}
                 config={{
                   layout: 'month_view',

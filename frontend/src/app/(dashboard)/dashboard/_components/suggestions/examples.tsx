@@ -34,105 +34,118 @@ type PromptExample = {
 };
 
 const allPrompts: PromptExample[] = [
+  // Turkic World
   {
-    title: 'Market research dashboard',
-    query: 'Create a comprehensive market research dashboard analyzing industry trends, customer segments, and competitive landscape. Include data visualization and actionable recommendations.',
-    icon: <BarChart3 className="text-green-700 dark:text-green-400" size={16} />,
+    title: 'Turkic world media coverage',
+    query: 'Analyze how Azerbaijan is portrayed in Turkish, Kazakh, Uzbek, and Kyrgyz media over the last 30 days. Focus on economic cooperation, cultural ties, and geopolitical alignment within the Turkic Council.',
+    icon: <Globe className="text-blue-700 dark:text-blue-400" size={16} />,
   },
   {
-    title: 'Recommendation engine',
-    query: 'Develop a recommendation engine for personalized product suggestions. Include collaborative filtering, content-based filtering, and hybrid approaches with evaluation metrics.',
-    icon: <Bot className="text-blue-700 dark:text-blue-400" size={16} />,
+    title: 'Turkey-Azerbaijan relations analysis',
+    query: 'Examine Turkish media coverage of Azerbaijan in the past month, focusing on bilateral relations, energy cooperation, defense partnership, and cultural exchanges. Compare government vs opposition media narratives.',
+    icon: <Users className="text-cyan-700 dark:text-cyan-400" size={16} />,
   },
+  
+  // Arab World
   {
-    title: 'Go-to-market strategy',
-    query: 'Develop a comprehensive go-to-market strategy for a new product. Include market sizing, customer acquisition channels, pricing strategy, and launch timeline.',
-    icon: <Briefcase className="text-rose-700 dark:text-rose-400" size={16} />,
-  },
-  {
-    title: 'Data pipeline automation',
-    query: 'Create an automated data pipeline for ETL processes. Include data validation, error handling, monitoring, and scalable architecture design.',
-    icon: <Settings className="text-purple-700 dark:text-purple-400" size={16} />,
-  },
-  {
-    title: 'Productivity system',
-    query: 'Design a comprehensive personal productivity system including task management, goal tracking, habit formation, and time blocking. Create templates and workflows for daily, weekly, and monthly planning.',
-    icon: <Target className="text-orange-700 dark:text-orange-400" size={16} />,
-  },
-  {
-    title: 'Content marketing plan',
-    query: 'Develop a 6-month content marketing strategy including blog posts, social media, email campaigns, and SEO optimization. Include content calendar and performance metrics.',
-    icon: <PenTool className="text-indigo-700 dark:text-indigo-400" size={16} />,
-  },
-  {
-    title: 'Portfolio analysis',
-    query: 'Create a personal investment portfolio analysis tool with risk assessment, diversification recommendations, and performance tracking against market benchmarks.',
+    title: 'Gulf states media perspective',
+    query: 'Analyze how UAE, Saudi Arabia, and Qatar media cover Azerbaijan over the last 30 days. Focus on energy partnerships, investment opportunities, and diplomatic relations.',
     icon: <DollarSign className="text-emerald-700 dark:text-emerald-400" size={16} />,
   },
   {
-    title: 'Customer journey map',
-    query: 'Map the complete customer journey from awareness to advocacy. Include touchpoints, pain points, emotions, and optimization opportunities at each stage.',
-    icon: <Users className="text-cyan-700 dark:text-cyan-400" size={16} />,
+    title: 'Arab world comprehensive scan',
+    query: 'Conduct analysis of Azerbaijan coverage in Egyptian, Lebanese, Jordanian, and Gulf media. Compare narratives on energy cooperation, religious tolerance, and regional security.',
+    icon: <Globe className="text-amber-700 dark:text-amber-400" size={16} />,
+  },
+  
+  // World Powers
+  {
+    title: 'US-EU media analysis',
+    query: 'Analyze Azerbaijan coverage in American (CNN, NYT, WSJ) and European (BBC, DW, Le Monde) media over the past month. Focus on energy security, democratic development, and regional conflicts.',
+    icon: <BarChart3 className="text-green-700 dark:text-green-400" size={16} />,
   },
   {
-    title: 'A/B testing framework',
-    query: 'Design a comprehensive A/B testing framework including hypothesis formation, statistical significance calculations, and result interpretation guidelines.',
-    icon: <TrendingUp className="text-teal-700 dark:text-teal-400" size={16} />,
+    title: 'Russia-China perspectives',
+    query: 'Compare how Russian (TASS, RT, Kommersant) and Chinese (Xinhua, CGTN, Global Times) media portray Azerbaijan. Focus on economic partnerships, regional influence, and geopolitical positioning.',
+    icon: <TrendingUp className="text-red-700 dark:text-red-400" size={16} />,
   },
   {
-    title: 'Code review automation',
-    query: 'Create an automated code review system that checks for security vulnerabilities, performance issues, and coding standards. Include integration with CI/CD pipelines.',
-    icon: <Code className="text-violet-700 dark:text-violet-400" size={16} />,
+    title: 'G7 nations media monitoring',
+    query: 'Analyze Azerbaijan coverage across G7 countries (US, UK, Germany, France, Italy, Japan, Canada) media. Compare narratives on energy transition, human rights, and economic development.',
+    icon: <Briefcase className="text-purple-700 dark:text-purple-400" size={16} />,
+  },
+  
+  // Immediate Neighbors
+  {
+    title: 'South Caucasus neighbors',
+    query: 'Analyze how Georgian and Armenian media cover Azerbaijan over the past 30 days. Focus on regional cooperation, border issues, and economic competition.',
+    icon: <Target className="text-orange-700 dark:text-orange-400" size={16} />,
   },
   {
-    title: 'Risk assessment matrix',
-    query: 'Develop a comprehensive risk assessment framework for business operations including risk identification, probability analysis, impact evaluation, and mitigation strategies.',
-    icon: <Shield className="text-red-700 dark:text-red-400" size={16} />,
+    title: 'Iran media monitoring',
+    query: 'Examine Iranian media coverage of Azerbaijan (Farsi sources) focusing on bilateral relations, regional security, transit corridors, and cultural ties. Include both state and reformist media.',
+    icon: <Shield className="text-rose-700 dark:text-rose-400" size={16} />,
   },
   {
-    title: 'Learning path generator',
-    query: 'Create a personalized learning path generator that adapts to individual goals, current skill level, and preferred learning style. Include progress tracking and resource recommendations.',
-    icon: <Brain className="text-pink-700 dark:text-pink-400" size={16} />,
+    title: 'All neighbors comprehensive',
+    query: 'Analyze Azerbaijan coverage in all neighboring countries (Russia, Iran, Georgia, Armenia, Turkey) media. Compare narratives on border security, trade relations, and regional projects.',
+    icon: <Users className="text-indigo-700 dark:text-indigo-400" size={16} />,
   },
+  
+  // Specialized Analysis
   {
-    title: 'Social media automation',
-    query: 'Design a social media automation system including content scheduling, engagement tracking, hashtag optimization, and performance analytics across multiple platforms.',
-    icon: <Globe className="text-blue-600 dark:text-blue-300" size={16} />,
-  },
-  {
-    title: 'Health tracking dashboard',
-    query: 'Build a comprehensive health tracking dashboard integrating fitness data, nutrition logging, sleep patterns, and medical records with actionable insights and goal setting.',
-    icon: <Heart className="text-red-600 dark:text-red-300" size={16} />,
-  },
-  {
-    title: 'Project automation',
-    query: 'Create an intelligent project management system with automatic task assignment, deadline tracking, resource allocation, and team communication integration.',
-    icon: <Calendar className="text-amber-700 dark:text-amber-400" size={16} />,
-  },
-  {
-    title: 'Sales funnel optimizer',
-    query: 'Analyze and optimize the entire sales funnel from lead generation to conversion. Include lead scoring, nurture sequences, and conversion rate optimization strategies.',
+    title: 'Energy sector focus',
+    query: 'Analyze international media coverage of Azerbaijan\'s energy sector, focusing on gas supplies to Europe, renewable energy projects, and OPEC+ relations. Include specialized energy publications.',
     icon: <Zap className="text-yellow-600 dark:text-yellow-300" size={16} />,
   },
   {
-    title: 'Startup pitch deck',
-    query: 'Generate a compelling startup pitch deck including problem statement, solution overview, market analysis, business model, financial projections, and funding requirements.',
-    icon: <Rocket className="text-orange-600 dark:text-orange-300" size={16} />,
+    title: 'COP29 preparation coverage',
+    query: 'Monitor global media coverage of Azerbaijan\'s COP29 hosting preparations. Analyze environmental, diplomatic, and economic narratives across different regions.',
+    icon: <Heart className="text-green-600 dark:text-green-300" size={16} />,
   },
   {
-    title: 'Photography workflow',
-    query: 'Design an end-to-end photography workflow including shoot planning, file organization, editing presets, client delivery, and portfolio management systems.',
-    icon: <Camera className="text-slate-700 dark:text-slate-400" size={16} />,
+    title: 'Karabakh reconstruction news',
+    query: 'Analyze international media coverage of Karabakh reconstruction efforts. Compare narratives in Western, Russian, Turkish, and regional media outlets.',
+    icon: <Rocket className="text-violet-700 dark:text-violet-400" size={16} />,
+  },
+  
+  // Regional Blocs
+  {
+    title: 'EU media comprehensive',
+    query: 'Analyze Azerbaijan coverage across major EU countries (Germany, France, Italy, Spain, Netherlands, Belgium). Focus on energy security, Eastern Partnership, and trade relations.',
+    icon: <Briefcase className="text-blue-600 dark:text-blue-300" size={16} />,
   },
   {
-    title: 'Supply chain analysis',
-    query: 'Create a supply chain optimization analysis including vendor evaluation, cost reduction opportunities, risk mitigation, and inventory management strategies.',
-    icon: <Briefcase className="text-stone-700 dark:text-stone-400" size={16} />,
+    title: 'Post-Soviet space analysis',
+    query: 'Examine media coverage of Azerbaijan in Russia, Ukraine, Belarus, and Central Asian republics. Compare narratives on regional integration, economic cooperation, and security.',
+    icon: <Globe className="text-slate-700 dark:text-slate-400" size={16} />,
   },
   {
-    title: 'UX research framework',
-    query: 'Develop a comprehensive UX research framework including user interviews, usability testing, persona development, and data-driven design recommendations.',
-    icon: <Sparkles className="text-fuchsia-700 dark:text-fuchsia-400" size={16} />,
+    title: 'OIC member states scan',
+    query: 'Analyze how Organization of Islamic Cooperation member states media cover Azerbaijan. Focus on religious tolerance model, interfaith dialogue, and Islamic heritage preservation.',
+    icon: <Brain className="text-pink-700 dark:text-pink-400" size={16} />,
+  },
+  
+  // Strategic Topics
+  {
+    title: 'Transport corridor coverage',
+    query: 'Analyze international media coverage of Middle Corridor and North-South transport routes through Azerbaijan. Focus on economic impact and geopolitical significance.',
+    icon: <Settings className="text-teal-700 dark:text-teal-400" size={16} />,
+  },
+  {
+    title: 'Investment climate perception',
+    query: 'Monitor how international business media (FT, Bloomberg, Reuters, WSJ) cover Azerbaijan\'s investment climate, economic reforms, and business opportunities.',
+    icon: <DollarSign className="text-emerald-600 dark:text-emerald-300" size={16} />,
+  },
+  {
+    title: 'Tourism sector coverage',
+    query: 'Analyze how international travel and lifestyle media cover Azerbaijan as tourist destination. Include major travel publications and influencer content.',
+    icon: <Camera className="text-fuchsia-700 dark:text-fuchsia-400" size={16} />,
+  },
+  {
+    title: 'Weekly media sentiment tracker',
+    query: 'Provide a 7-day media sentiment analysis of Azerbaijan coverage across US, EU, Russia, Turkey, and Iran. Highlight major themes and sentiment shifts.',
+    icon: <Calendar className="text-stone-700 dark:text-stone-400" size={16} />,
   },
 ];
 
@@ -162,8 +175,8 @@ export const Examples = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4">
-      <div className="flex justify-between items-center mb-3">
+    <div className="w-full max-w-3xl mx-auto">
+      <div className="flex justify-between items-center mb-4">
         <span className="text-xs text-muted-foreground font-medium">Quick starts</span>
         <Button
           variant="ghost"
@@ -195,8 +208,8 @@ export const Examples = ({
               className="group cursor-pointer h-full shadow-none transition-all bg-sidebar hover:bg-neutral-100 dark:hover:bg-neutral-800/60 p-0 justify-center"
               onClick={() => onSelectPrompt && onSelectPrompt(prompt.query)}
             >
-              <CardHeader className="p-2 grid-rows-1">
-                <div className="flex items-start justify-center gap-1.5">
+              <CardHeader className="p-3 grid-rows-1">
+                <div className="flex items-start justify-center gap-2">
                   <div className="flex-shrink-0 mt-0.5">
                     {React.cloneElement(prompt.icon as React.ReactElement, { size: 14 })}
                   </div>

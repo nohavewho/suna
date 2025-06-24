@@ -97,7 +97,7 @@ const uploadFiles = async (
         throw new Error('No access token available');
       }
 
-      const response = await fetch(`${API_URL}/sandboxes/${sandboxId}/files`, {
+      const response = await fetch(`${API_URL}/api/sandboxes/${sandboxId}/files`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${session.access_token}`,

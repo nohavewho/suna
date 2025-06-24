@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, Plus, Star, Bot, Edit, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { CreateAgentDialog } from '@/app/(dashboard)/agents/_components/create-agent-dialog';
 import { useFeatureFlags } from '@/lib/feature-flags';
+import Image from 'next/image';
 
 interface AgentSelectorProps {
   onAgentSelect?: (agentId: string | undefined) => void;
@@ -38,7 +39,7 @@ export function AgentSelector({
 
   
   const { flags, loading: flagsLoading } = useFeatureFlags(['custom_agents']);
-  const customAgentsEnabled = flags.custom_agents;
+  const customAgentsEnabled = true; // Always enable custom agents for Agent AZ
   
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -50,9 +51,28 @@ export function AgentSelector({
     ? agents.find(agent => agent.agent_id === selectedAgentId)
     : null;
 
-  const displayName = currentAgent?.name || defaultAgent?.name || 'Suna';
+  const displayName = currentAgent?.name || defaultAgent?.name || 'Agent AZ';
   const agentAvatar = currentAgent?.avatar;
   const isUsingSuna = !currentAgent && !defaultAgent;
+
+  // Function to render agent avatar - replace globe emoji with logo
+  const renderAgentAvatar = (avatar: string | undefined, size: 'sm' | 'md' = 'md') => {
+    if (avatar === '🌍') {
+      const dimension = size === 'sm' ? 60 : 80;
+      return (
+        <Image
+          src="/az.png"
+          alt="Agent AZ"
+          width={dimension}
+          height={dimension}
+          className="rounded-md inline-block align-middle"
+          unoptimized={true}
+          priority
+        />
+      );
+    }
+    return avatar;
+  };
 
   const handleAgentSelect = (agentId: string | undefined) => {
     onAgentSelect?.(agentId);
@@ -63,6 +83,16 @@ export function AgentSelector({
     setCreateDialogOpen(true);
     setIsOpen(false);
   };
+
+  // Auto-select default agent when agents are loaded and no agent is selected
+  useEffect(() => {
+    if (!selectedAgentId && defaultAgent && onAgentSelect) {
+      onAgentSelect(defaultAgent.agent_id);
+    } else if (!selectedAgentId && !defaultAgent && !isLoading && onAgentSelect) {
+      // If no default agent exists, select undefined to use Agent AZ
+      onAgentSelect(undefined);
+    }
+  }, [defaultAgent, selectedAgentId, onAgentSelect, isLoading]);
 
   const handleManageAgents = () => {
     router.push('/agents');
@@ -79,7 +109,7 @@ export function AgentSelector({
       return (
         <div className={cn("flex items-center", className)}>
           <span className="tracking-tight text-4xl font-semibold leading-tight text-primary">
-            Suna
+            Agent AZ
           </span>
         </div>
       );
@@ -117,11 +147,9 @@ export function AgentSelector({
                 variant="ghost"
                 className="flex items-center gap-1 px-2 py-1 h-auto hover:bg-transparent hover:text-primary transition-colors group"
               >
-                <span className="underline decoration-dashed underline-offset-6 decoration-muted-foreground/50 tracking-tight text-4xl font-semibold leading-tight text-primary">
+                <span className="flex items-center gap-1 underline decoration-dashed underline-offset-6 decoration-muted-foreground/50 tracking-tight text-4xl font-semibold leading-tight text-primary">
                   {displayName}
-                  <span className="text-muted-foreground ml-2">
-                    {agentAvatar && agentAvatar}
-                  </span>
+                  {agentAvatar && renderAgentAvatar(agentAvatar, 'md')}
                 </span>
                 <div className="flex items-center opacity-60 group-hover:opacity-100 transition-opacity">
                   <ChevronDown className="h-5 w-5 text-muted-foreground" />
@@ -145,7 +173,7 @@ export function AgentSelector({
                 <div className="flex items-center gap-2 w-full">
                   <User className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   <div className="flex items-center gap-1 flex-1 min-w-0">
-                    <span className="font-medium truncate">Suna</span>
+                    <span className="font-medium truncate">Agent AZ</span>
                     <Badge variant="outline" className="text-xs px-1 py-0 flex-shrink-0">
                       Default
                     </Badge>
@@ -167,7 +195,7 @@ export function AgentSelector({
                       className="flex flex-col items-start gap-1 p-3 cursor-pointer"
                     >
                       <div className="flex items-center gap-2 w-full">
-                        {agent.avatar}
+                        {renderAgentAvatar(agent.avatar, 'sm')}
                         <div className="flex items-center gap-1 flex-1 min-w-0">
                           <span className="font-medium truncate">{agent.name}</span>
                           {agent.is_default && (
@@ -258,7 +286,7 @@ export function AgentSelector({
               <div className="flex items-center gap-2 w-full">
                 <User className="h-4 w-4 text-muted-foreground" />
                 <div className="flex items-center gap-1 flex-1">
-                  <span className="font-medium">Suna</span>
+                  <span className="font-medium">Agent AZ</span>
                   <Badge variant="outline" className="text-xs px-1 py-0">
                     Default
                   </Badge>

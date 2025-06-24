@@ -29,6 +29,7 @@ import { AgentSelector } from '@/components/dashboard/agent-selector';
 import { cn } from '@/lib/utils';
 import { useModal } from '@/hooks/use-modal-store';
 import { Examples } from './suggestions/examples';
+import { MediaAnalysisSelector } from './media-analysis-selector';
 import { useThreadQuery } from '@/hooks/react-query/threads/use-threads';
 import { normalizeFilenameToNFC } from '@/lib/utils/unicode';
 
@@ -190,40 +191,87 @@ export function DashboardContent() {
           </div>
         )}
 
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[650px] max-w-[90%]">
-          <div className="flex flex-col items-center text-center w-full">
-            <div className="flex items-center gap-1">
-              <h1 className="tracking-tight text-4xl text-muted-foreground leading-tight">
-                Hey, I am
-              </h1>
-              <AgentSelector
-                selectedAgentId={selectedAgentId}
-                onAgentSelect={setSelectedAgentId}
-                variant="heading"
-              />
-            </div>
-            <p className="tracking-tight text-3xl font-normal text-muted-foreground/80 mt-2">
-              What would you like to do today?
-            </p>
-          </div>
-
-          <div className={cn(
-            "w-full mb-2",
-            "max-w-full",
-            "sm:max-w-3xl"
-          )}>
-            <ChatInput
-              ref={chatInputRef}
-              onSubmit={handleSubmit}
-              loading={isSubmitting}
-              placeholder="Describe what you need help with..."
-              value={inputValue}
-              onChange={setInputValue}
-              hideAttachments={false}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[650px] max-w-[90%] scale-[0.85] sm:scale-90 lg:scale-90">
+          <div className="flex flex-col items-center text-center w-full mb-3">
+            <AgentSelector
+              selectedAgentId={selectedAgentId}
+              onAgentSelect={setSelectedAgentId}
+              variant="heading"
             />
           </div>
 
-          <Examples onSelectPrompt={setInputValue} />
+          {/* Mobile: Media Analysis first, then Chat */}
+          <div className="flex flex-col lg:hidden">
+            <MediaAnalysisSelector 
+              onAnalyze={(prompt) => {
+                setInputValue(prompt);
+                setTimeout(() => {
+                  handleSubmit(prompt, {
+                    model_name: undefined,
+                    enable_thinking: false,
+                    reasoning_effort: 'low',
+                    stream: true,
+                    enable_context_manager: false
+                  });
+                }, 100);
+              }}
+              className="mb-3"
+            />
+            
+            <div className="w-full">
+              <ChatInput
+                ref={chatInputRef}
+                onSubmit={handleSubmit}
+                loading={isSubmitting}
+                placeholder="Describe what you need help with..."
+                value={inputValue}
+                onChange={setInputValue}
+                hideAttachments={false}
+              />
+            </div>
+          </div>
+
+          {/* Desktop: Media Analysis first, then Chat (same as mobile) */}
+          <div className="hidden lg:flex lg:flex-col">
+            <MediaAnalysisSelector 
+              onAnalyze={(prompt) => {
+                setInputValue(prompt);
+                setTimeout(() => {
+                  handleSubmit(prompt, {
+                    model_name: undefined,
+                    enable_thinking: false,
+                    reasoning_effort: 'low',
+                    stream: true,
+                    enable_context_manager: false
+                  });
+                }, 100);
+              }}
+              className="mb-3"
+            />
+
+            <div className={cn(
+              "w-full",
+              "max-w-full",
+              "sm:max-w-3xl"
+            )}>
+              <ChatInput
+                ref={chatInputRef}
+                onSubmit={handleSubmit}
+                loading={isSubmitting}
+                placeholder="Describe what you need help with..."
+                value={inputValue}
+                onChange={setInputValue}
+                hideAttachments={false}
+              />
+            </div>
+          </div>
+          
+          <div className="mt-6 pt-4 border-t border-border/40 hidden lg:block">
+            <p className="text-xs text-muted-foreground text-center mb-6">
+              Or use custom prompt
+            </p>
+            <Examples onSelectPrompt={setInputValue} />
+          </div>
         </div>
 
         <BillingErrorAlert

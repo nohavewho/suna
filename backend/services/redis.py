@@ -23,16 +23,19 @@ def initialize():
     load_dotenv()
 
     # Get Redis configuration
-    redis_host = os.getenv("REDIS_HOST", "redis")
+    redis_host = os.getenv("REDIS_HOST")
     redis_port = int(os.getenv("REDIS_PORT", 6379))
     redis_password = os.getenv("REDIS_PASSWORD", "")
     # Convert string 'True'/'False' to boolean
     redis_ssl_str = os.getenv("REDIS_SSL", "False")
     redis_ssl = redis_ssl_str.lower() == "true"
+    
+    if not redis_host:
+        raise ValueError("REDIS_HOST environment variable is required")
 
     logger.info(f"Initializing Redis connection to {redis_host}:{redis_port}")
 
-    # Create Redis client with basic configuration
+    # Create Redis client with optimized configuration
     client = redis.Redis(
         host=redis_host,
         port=redis_port,
@@ -43,6 +46,8 @@ def initialize():
         socket_connect_timeout=5.0,
         retry_on_timeout=True,
         health_check_interval=30,
+        max_connections=10,  # Reduced for Upstash free tier
+        socket_keepalive=True,
     )
 
     return client

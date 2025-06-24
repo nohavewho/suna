@@ -19,11 +19,7 @@ export function FooterSection() {
     setMounted(true);
   }, []);
 
-  const logoSrc = !mounted
-    ? '/kortix-logo.svg'
-    : resolvedTheme === 'dark'
-      ? '/kortix-logo-white.svg'
-      : '/kortix-logo.svg';
+  const logoSrc = '/az.png';
 
   return (
     <footer id="footer" className="w-full pb-0">
@@ -32,7 +28,7 @@ export function FooterSection() {
           <Link href="/" className="flex items-center gap-2">
             <Image
               src={logoSrc}
-              alt="Kortix Logo"
+              alt="AI Research Logo"
               width={122}
               height={22}
               priority
@@ -44,7 +40,7 @@ export function FooterSection() {
 
           <div className="flex items-center gap-4">
             <a
-              href="https://github.com/kortix-ai/suna"
+              href="https://github.com/airesearchprojects/suna"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"

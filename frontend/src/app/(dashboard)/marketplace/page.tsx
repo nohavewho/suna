@@ -129,7 +129,7 @@ const InstallDialog: React.FC<InstallDialogProps> = ({
           continue;
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000'}/secure-mcp/credential-profiles/${encodeURIComponent(req.qualified_name)}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8000'}/api/secure-mcp/credential-profiles/${encodeURIComponent(req.qualified_name)}`, {
           headers: {
             'Authorization': `Bearer ${session.access_token}`,
             'Content-Type': 'application/json'
