@@ -32,6 +32,7 @@ import {
   PanelRightOpen
 } from "lucide-react";
 import { useMCPServers } from "@/hooks/react-query/mcp/use-mcp-servers";
+import { useAgents } from "@/hooks/react-query/agents/use-agents";
 import { truncateString } from "@/lib/utils";
 
 const inputNodes = [
@@ -45,15 +46,7 @@ const inputNodes = [
   },
 ];
 
-const agentNodes = [
-  {
-    id: "agent",
-    name: "General Agent",
-    description: "Versatile AI agent for various tasks",
-    icon: Bot,
-    category: "agent",
-  },
-];
+// Removed static agentNodes - will be loaded dynamically
 
 const toolNodes = [
   {
@@ -174,6 +167,32 @@ export default function NodePalette({ onCollapseChange }: NodePaletteProps) {
     mcpSearchQuery.length > 2 ? mcpSearchQuery : undefined
   );
   const mcpServers = mcpServersResponse?.servers || [];
+
+  // Load user's agents dynamically
+  const { data: agentsResponse, isLoading: agentsLoading } = useAgents({
+    limit: 100,
+    sort_by: 'name',
+    sort_order: 'asc'
+  });
+
+  // Transform agents to node format
+  const agentNodes = useMemo(() => {
+    if (!agentsResponse?.agents) return [];
+    
+    return agentsResponse.agents.map(agent => ({
+      id: agent.agent_id,
+      name: agent.name,
+      description: agent.description || "Custom AI agent for workflow automation",
+      icon: Bot,
+      category: "agent",
+      // Store additional agent data for workflow usage
+      agentData: {
+        system_prompt: agent.system_prompt,
+        configured_mcps: agent.configured_mcps,
+        agentpress_tools: agent.agentpress_tools
+      }
+    }));
+  }, [agentsResponse]);
 
   const filteredNodes = useMemo(() => {
     let nodes: any[] = [];

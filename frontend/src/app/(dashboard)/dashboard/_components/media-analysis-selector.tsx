@@ -18,7 +18,8 @@ import {
   Target, 
   Search,
   X,
-  ChevronDown
+  ChevronDown,
+  Languages
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { DateRange } from 'react-day-picker';
@@ -341,6 +342,87 @@ const DATE_PRESETS = [
   { label: 'Last 6 months', days: 180 },
 ];
 
+const LANGUAGES = [
+  { code: 'az', name: 'Azərbaycanca', nativeName: 'Azərbaycanca' },
+  { code: 'ru', name: 'Russian', nativeName: 'Русский' },
+  { code: 'tr', name: 'Turkish', nativeName: 'Türkçe' },
+  { code: 'en', name: 'English', nativeName: 'English' },
+  { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
+  { code: 'zh', name: 'Chinese', nativeName: '中文' },
+  { code: 'es', name: 'Spanish', nativeName: 'Español' },
+  { code: 'fr', name: 'French', nativeName: 'Français' },
+  { code: 'de', name: 'German', nativeName: 'Deutsch' },
+  { code: 'it', name: 'Italian', nativeName: 'Italiano' },
+  { code: 'ja', name: 'Japanese', nativeName: '日本語' },
+  { code: 'ko', name: 'Korean', nativeName: '한국어' },
+  { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
+  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
+  { code: 'ur', name: 'Urdu', nativeName: 'اردو' },
+  { code: 'fa', name: 'Persian', nativeName: 'فارسی' },
+  { code: 'he', name: 'Hebrew', nativeName: 'עברית' },
+  { code: 'pl', name: 'Polish', nativeName: 'Polski' },
+  { code: 'nl', name: 'Dutch', nativeName: 'Nederlands' },
+  { code: 'sv', name: 'Swedish', nativeName: 'Svenska' },
+  { code: 'no', name: 'Norwegian', nativeName: 'Norsk' },
+  { code: 'da', name: 'Danish', nativeName: 'Dansk' },
+  { code: 'fi', name: 'Finnish', nativeName: 'Suomi' },
+  { code: 'el', name: 'Greek', nativeName: 'Ελληνικά' },
+  { code: 'cs', name: 'Czech', nativeName: 'Čeština' },
+  { code: 'hu', name: 'Hungarian', nativeName: 'Magyar' },
+  { code: 'ro', name: 'Romanian', nativeName: 'Română' },
+  { code: 'bg', name: 'Bulgarian', nativeName: 'Български' },
+  { code: 'uk', name: 'Ukrainian', nativeName: 'Українська' },
+  { code: 'th', name: 'Thai', nativeName: 'ไทย' },
+  { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt' },
+  { code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia' },
+  { code: 'ms', name: 'Malay', nativeName: 'Bahasa Melayu' },
+  { code: 'ka', name: 'Georgian', nativeName: 'ქართული' },
+  { code: 'hy', name: 'Armenian', nativeName: 'Հայերեն' },
+  { code: 'kk', name: 'Kazakh', nativeName: 'Қазақ' },
+  { code: 'uz', name: 'Uzbek', nativeName: 'Oʻzbek' },
+  { code: 'ky', name: 'Kyrgyz', nativeName: 'Кыргызча' },
+  { code: 'tg', name: 'Tajik', nativeName: 'Тоҷикӣ' },
+  { code: 'tk', name: 'Turkmen', nativeName: 'Türkmen' },
+  { code: 'mn', name: 'Mongolian', nativeName: 'Монгол' },
+  { code: 'sr', name: 'Serbian', nativeName: 'Српски' },
+  { code: 'hr', name: 'Croatian', nativeName: 'Hrvatski' },
+  { code: 'bs', name: 'Bosnian', nativeName: 'Bosanski' },
+  { code: 'sq', name: 'Albanian', nativeName: 'Shqip' },
+  { code: 'mk', name: 'Macedonian', nativeName: 'Македонски' },
+  { code: 'sl', name: 'Slovenian', nativeName: 'Slovenščina' },
+  { code: 'sk', name: 'Slovak', nativeName: 'Slovenčina' },
+  { code: 'lt', name: 'Lithuanian', nativeName: 'Lietuvių' },
+  { code: 'lv', name: 'Latvian', nativeName: 'Latviešu' },
+  { code: 'et', name: 'Estonian', nativeName: 'Eesti' },
+  { code: 'sw', name: 'Swahili', nativeName: 'Kiswahili' },
+  { code: 'am', name: 'Amharic', nativeName: 'አማርኛ' },
+  { code: 'ha', name: 'Hausa', nativeName: 'Hausa' },
+  { code: 'yo', name: 'Yoruba', nativeName: 'Yorùbá' },
+  { code: 'ig', name: 'Igbo', nativeName: 'Igbo' },
+  { code: 'zu', name: 'Zulu', nativeName: 'isiZulu' },
+  { code: 'xh', name: 'Xhosa', nativeName: 'isiXhosa' },
+  { code: 'af', name: 'Afrikaans', nativeName: 'Afrikaans' },
+  { code: 'ne', name: 'Nepali', nativeName: 'नेपाली' },
+  { code: 'si', name: 'Sinhala', nativeName: 'සිංහල' },
+  { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்' },
+  { code: 'te', name: 'Telugu', nativeName: 'తెలుగు' },
+  { code: 'ml', name: 'Malayalam', nativeName: 'മലയാളം' },
+  { code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ' },
+  { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી' },
+  { code: 'mr', name: 'Marathi', nativeName: 'मराठी' },
+  { code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ' },
+  { code: 'tl', name: 'Filipino', nativeName: 'Filipino' },
+  { code: 'ca', name: 'Catalan', nativeName: 'Català' },
+  { code: 'eu', name: 'Basque', nativeName: 'Euskara' },
+  { code: 'gl', name: 'Galician', nativeName: 'Galego' },
+  { code: 'is', name: 'Icelandic', nativeName: 'Íslenska' },
+  { code: 'ga', name: 'Irish', nativeName: 'Gaeilge' },
+  { code: 'cy', name: 'Welsh', nativeName: 'Cymraeg' },
+  { code: 'mt', name: 'Maltese', nativeName: 'Malti' },
+  { code: 'la', name: 'Latin', nativeName: 'Latina' }
+];
+
 type MediaAnalysisSelectorProps = {
   onAnalyze: (prompt: string) => void;
   className?: string;
@@ -355,6 +437,7 @@ export const MediaAnalysisSelector: React.FC<MediaAnalysisSelectorProps> = ({
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [isCountrySelectOpen, setIsCountrySelectOpen] = useState(false);
   const [countrySearch, setCountrySearch] = useState('');
+  const [digestLanguage, setDigestLanguage] = useState<string>('az');
 
   const selectedCountries = COUNTRIES.filter(c => sourceCountries.includes(c.code));
   const availableCountries = COUNTRIES.filter(c => 
@@ -384,6 +467,7 @@ export const MediaAnalysisSelector: React.FC<MediaAnalysisSelectorProps> = ({
   const generateAnalysisPrompt = () => {
     const targetCountry = COUNTRIES.find(c => c.code === targetGeo);
     const sourceCountryNames = selectedCountries.map(c => c.name);
+    const selectedLanguage = LANGUAGES.find(l => l.code === digestLanguage);
     
     let prompt = `Analyze how ${targetCountry?.name} is portrayed in media from: ${sourceCountryNames.join(', ')}`;
     
@@ -397,6 +481,9 @@ export const MediaAnalysisSelector: React.FC<MediaAnalysisSelectorProps> = ({
     }
     
     prompt += '. Focus on economic cooperation, diplomatic relations, energy partnerships, and geopolitical developments. Provide sentiment analysis and key themes.';
+    
+    // Add language instruction
+    prompt += ` Please provide the analysis digest in ${selectedLanguage?.nativeName || selectedLanguage?.name || 'Azərbaycanca'}.`;
     
     return prompt;
   };
@@ -602,6 +689,36 @@ export const MediaAnalysisSelector: React.FC<MediaAnalysisSelectorProps> = ({
             
             <p className="text-xs text-muted-foreground hidden lg:block">
               Time period for media analysis
+            </p>
+          </div>
+        </Card>
+      </div>
+
+      {/* Language Selector */}
+      <div className="mb-4">
+        <Card className="p-3 lg:p-4 bg-sidebar hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-colors max-w-sm mx-auto">
+          <div className="space-y-2 lg:space-y-3">
+            <div className="flex items-center gap-2">
+              <Languages className="size-4 text-orange-600" />
+              <Label className="text-sm font-medium">Digest Language</Label>
+            </div>
+            <Select value={digestLanguage} onValueChange={setDigestLanguage}>
+              <SelectTrigger className="w-full shadow-sm border-border/60">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="max-h-60">
+                {LANGUAGES.map((language) => (
+                  <SelectItem key={language.code} value={language.code}>
+                    <span className="flex items-center gap-2">
+                      <span>{language.nativeName}</span>
+                      <span className="text-xs text-muted-foreground">({language.name})</span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground hidden lg:block">
+              Language for the analysis digest
             </p>
           </div>
         </Card>

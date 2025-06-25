@@ -91,11 +91,18 @@ export function DashboardContent() {
       enable_context_manager?: boolean;
     },
   ) => {
+    console.log('handleSubmit called with message:', message);
+    console.log('handleSubmit options:', options);
+    console.log('isSubmitting:', isSubmitting);
+    console.log('message.trim():', message.trim());
+    
     if (
       (!message.trim() && !chatInputRef.current?.getPendingFiles().length) ||
       isSubmitting
-    )
+    ) {
+      console.log('handleSubmit early return - no message or already submitting');
       return;
+    }
 
     setIsSubmitting(true);
 
@@ -204,16 +211,16 @@ export function DashboardContent() {
           <div className="flex flex-col lg:hidden">
             <MediaAnalysisSelector 
               onAnalyze={(prompt) => {
+                console.log('MediaAnalysisSelector onAnalyze called with prompt:', prompt);
                 setInputValue(prompt);
-                setTimeout(() => {
-                  handleSubmit(prompt, {
-                    model_name: undefined,
-                    enable_thinking: false,
-                    reasoning_effort: 'low',
-                    stream: true,
-                    enable_context_manager: false
-                  });
-                }, 100);
+                // Immediately submit without timeout
+                handleSubmit(prompt, {
+                  model_name: undefined,
+                  enable_thinking: false,
+                  reasoning_effort: 'low',
+                  stream: true,
+                  enable_context_manager: false
+                });
               }}
               className="mb-3"
             />
@@ -235,16 +242,16 @@ export function DashboardContent() {
           <div className="hidden lg:flex lg:flex-col">
             <MediaAnalysisSelector 
               onAnalyze={(prompt) => {
+                console.log('MediaAnalysisSelector onAnalyze called with prompt:', prompt);
                 setInputValue(prompt);
-                setTimeout(() => {
-                  handleSubmit(prompt, {
-                    model_name: undefined,
-                    enable_thinking: false,
-                    reasoning_effort: 'low',
-                    stream: true,
-                    enable_context_manager: false
-                  });
-                }, 100);
+                // Immediately submit without timeout
+                handleSubmit(prompt, {
+                  model_name: undefined,
+                  enable_thinking: false,
+                  reasoning_effort: 'low',
+                  stream: true,
+                  enable_context_manager: false
+                });
               }}
               className="mb-3"
             />
